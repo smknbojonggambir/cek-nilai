@@ -10,52 +10,87 @@
       background: #f4f6f8;
       margin: 0;
       padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
     .container {
       max-width: 600px;
+      width: 100%;
       margin: auto;
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       padding: 30px;
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 25px;
+      font-size: 1.8em;
     }
     input {
-      width: 100%;
+      width: calc(100% - 24px); /* Account for padding */
       padding: 12px;
       font-size: 16px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 8px;
+      box-sizing: border-box; /* Include padding in width */
     }
     button {
       width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      background: #007bff;
+      padding: 14px;
+      font-size: 17px;
+      background: linear-gradient(45deg, #007bff, #0056b3);
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
     }
     button:hover {
-      background: #0056b3;
+      background: linear-gradient(45deg, #0056b3, #003d80);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .result {
-      margin-top: 20px;
-      font-size: 18px;
-      padding: 15px;
-      border-radius: 8px;
+      margin-top: 25px;
+      font-size: 1.1em;
+      padding: 20px;
+      border-radius: 10px;
+      line-height: 1.6;
+      text-align: left;
     }
-    .success { background: #d4edda; color: #155724; }
-    .warning { background: #fff3cd; color: #856404; }
-    .notfound { background: #f8d7da; color: #721c24; }
+    .success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+    }
+    .danger { /* Changed from notfound for consistency with academic terms */
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .message-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h2>Cek Nilai Anda</h2>
-  <input type="text" id="namaInput" placeholder="Masukkan nama pendek...">
+  <h2>🌟 Cek Nilai Akademikmu Sekarang! 🌟</h2>
+  <input type="text" id="namaInput" placeholder="Masukkan nama pendekmu di sini...">
   <button onclick="cekNilai()">Cek Nilai</button>
   <div id="hasil" class="result" style="display:none;"></div>
 </div>
@@ -184,22 +219,38 @@
 
     if (siswa) {
       hasil.style.display = 'block';
-      if (siswa.nilai < 60) {
-        hasil.className = 'result warning';
-        hasil.innerHTML = `<strong>${siswa.nama}</strong> (${siswa.kelas})<br>
-        Nilai Anda: <strong>${siswa.nilai}</strong><br>
-        ⚠ Silakan hubungi guru yang bersangkutan untuk perbaikan nilai.<br>
-        Nilai Anda kurang dan akan menjadi pertimbangan untuk naik ke kelas 11.`;
-      } else {
+      if (siswa.nilai >= 80) {
         hasil.className = 'result success';
-        hasil.innerHTML = `<strong>${siswa.nama}</strong> (${siswa.kelas})<br>
-        Nilai Anda: <strong>${siswa.nilai}</strong><br>
-        🎉 Selamat! Anda telah memenuhi nilai ketuntasan.`;
+        hasil.innerHTML = `
+          <div class="message-title">🎉 Selamat, ${siswa.nama}! Kerja Kerasmu Terbayar! 🎉</div>
+          Kelas: <strong>${siswa.kelas}</strong><br>
+          Nilai Anda: <strong>${siswa.nilai}</strong><br>
+          Luar biasa! Anda telah mencapai nilai yang sangat baik dan memenuhi ketuntasan. Pertahankan semangat belajar ini, masa depan cerah menantimu!
+        `;
+      } else if (siswa.nilai >= 60 && siswa.nilai <= 79) {
+        hasil.className = 'result warning';
+        hasil.innerHTML = `
+          <div class="message-title">💡 Semangat, ${siswa.nama}! Ada Kesempatan untuk Lebih Baik! 💡</div>
+          Kelas: <strong>${siswa.kelas}</strong><br>
+          Nilai Anda: <strong>${siswa.nilai}</strong><br>
+          Nilai Anda cukup baik, namun masih ada ruang untuk perbaikan. Jangan khawatir! Kamu berhak mengikuti remedial untuk meningkatkan nilai dan mengukir prestasi yang lebih gemilang. Segera hubungi guru mata pelajaranmu untuk jadwal perbaikan. Setiap usaha pasti membuahkan hasil!
+        `;
+      } else { // Nilai < 60
+        hasil.className = 'result danger';
+        hasil.innerHTML = `
+          <div class="message-title">❗ Tetap Semangat, ${siswa.nama}! Ini Bukan Akhir! ❗</div>
+          Kelas: <strong>${siswa.kelas}</strong><br>
+          Nilai Anda: <strong>${siswa.nilai}</strong><br>
+          Sayangnya, nilai Anda belum mencapai batas kelulusan. Ini berarti Anda perlu mengulang materi ini. Jangan jadikan ini penghalang, tapi jadikan motivasi untuk belajar lebih giat lagi! Segera **hubungi guru mata pelajaran Anda** untuk mendiskusikan langkah selanjutnya. Kami percaya Anda bisa melewati ini dan mencapai keberhasilan di masa depan!
+        `;
       }
     } else {
       hasil.style.display = 'block';
-      hasil.className = 'result notfound';
-      hasil.innerHTML = `❌ Nama tidak ditemukan. Pastikan penulisan nama benar.`;
+      hasil.className = 'result danger';
+      hasil.innerHTML = `
+        <div class="message-title">🔍 Nama Tidak Ditemukan 🚫</div>
+        Mohon maaf, nama yang Anda masukkan tidak ada dalam daftar. Pastikan Anda menuliskan nama pendek dengan benar. Coba lagi ya!
+      `;
     }
   }
 </script>
