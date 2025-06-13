@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cek Nilai Siswa</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .success { background: #d4edda; color: #155724; }
+    .warning { background: #fff3cd; color: #856404; }
+    .notfound { background: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Cek Nilai Anda</h2>
+  <input type="text" id="namaInput" placeholder="Masukkan nama pendek...">
+  <button onclick="cekNilai()">Cek Nilai</button>
+  <div id="hasil" class="result" style="display:none;"></div>
+</div>
+
+<script>
+  const dataSiswa = [
+    {nama:"LUTFITIRTAZAYYINI",kelas:"XAPHP",nilai:31},
+{nama:"Ibrahim",kelas:"XAPHP",nilai:6},
+{nama:"ANGGANURANGGA",kelas:"XAPHP",nilai:29},
+{nama:"ElfannMuhammadnazar",kelas:"XAPHP",nilai:17},
+{nama:"Pirman",kelas:"XAPHP",nilai:26},
+{nama:"PSAT03073",kelas:"XAPHP",nilai:40},
+{nama:"MuhamadadwamAlmuhasabah",kelas:"XAPHP",nilai:29},
+{nama:"Fahrisani",kelas:"XAPHP",nilai:23},
+{nama:"AndiHermawan",kelas:"XAPHP",nilai:83},
+{nama:"Ardiansyah",kelas:"XAPHP",nilai:37},
+{nama:"MFahrisArrazqi",kelas:"XAPHP",nilai:46},
+{nama:"AhmadGias",kelas:"XAPHP",nilai:23},
+{nama:"Hizkil",kelas:"XAPHP",nilai:31},
+{nama:"FIKISUMINAR",kelas:"XAPHP",nilai:40},
+{nama:"RizkaAmeliaputri",kelas:"XAPHP",nilai:86},
+{nama:"MuhamadRizkijanwar",kelas:"XAPHP",nilai:83},
+{nama:"RestuKurniawan",kelas:"XAPHP",nilai:40},
+{nama:"SUTEURAMADANI",kelas:"XAPHP",nilai:14},
+{nama:"DAKAISKANDAR",kelas:"XAPHP",nilai:31},
+{nama:"RAMDANI",kelas:"XAPHP",nilai:37},
+{nama:"MiftahulHuda",kelas:"XAPHP",nilai:40},
+{nama:"Rinaldi",kelas:"XAPHP",nilai:17},
+{nama:"Arinimegaagustin",kelas:"XAPHP",nilai:77},
+{nama:"ANGGANURANGGA",kelas:"XAPHP",nilai:74},
+{nama:"MuhammadAlBasit",kelas:"XDKV1",nilai:31},
+{nama:"EkaRamdani",kelas:"XDKV1",nilai:17},
+{nama:"NadiaKhoirunnisa",kelas:"XDKV1",nilai:49},
+{nama:"NandaArdani",kelas:"XDKV1",nilai:94},
+{nama:"MuhamadAzrilAlansori",kelas:"XDKV1",nilai:17},
+{nama:"IlhamHapidBaihaqi",kelas:"XDKV1",nilai:46},
+{nama:"AliAdrianMaulana",kelas:"XDKV1",nilai:34},
+{nama:"RezaNugraha",kelas:"XDKV1",nilai:46},
+{nama:"ARIPSAPUTRA",kelas:"XDKV1",nilai:71},
+{nama:"ElmaRahmawati",kelas:"XDKV1",nilai:31},
+{nama:"Fajruldzulfian",kelas:"XDKV1",nilai:91},
+{nama:"DylanFelishArzaSyahputra",kelas:"XDKV1",nilai:74},
+{nama:"AzkaDwiSyifaMunandar",kelas:"XDKV1",nilai:40},
+{nama:"salmanrakaalfahrizi",kelas:"XDKV1",nilai:51},
+{nama:"Fahrulrizkiramdani",kelas:"XDKV1",nilai:74},
+{nama:"AkmawatiMutmainah",kelas:"XDKV1",nilai:40},
+{nama:"IrsanFarizMaulana",kelas:"XDKV1",nilai:26},
+{nama:"IrpanHaeruman",kelas:"XDKV1",nilai:63},
+{nama:"AnisaNapilah",kelas:"XDKV1",nilai:77},
+{nama:"AgungGunawan",kelas:"XDKV1",nilai:43},
+{nama:"RiriPauziah",kelas:"XDKV1",nilai:91},
+{nama:"Rahmanmaulana",kelas:"XDKV1",nilai:80},
+{nama:"RahmaNurhikmah",kelas:"XDKV1",nilai:91},
+{nama:"RandiMaolana",kelas:"XDKV1",nilai:57},
+{nama:"YopiNuraeni",kelas:"XDKV1",nilai:20},
+{nama:"ShintiaAgustin",kelas:"XDKV1",nilai:83},
+{nama:"Silvaameliaputri",kelas:"XDKV1",nilai:46},
+{nama:"Seniaropah",kelas:"XDKV1",nilai:49},
+{nama:"TrianFarizAzzikri",kelas:"XDKV1",nilai:69},
+{nama:"derisdwiardika",kelas:"XDKV2",nilai:69},
+{nama:"DedeMuhammadfauzi",kelas:"XDKV2",nilai:14},
+{nama:"FahmiSaepulMilah",kelas:"XDKV2",nilai:60},
+{nama:"Pirmannurulihsan",kelas:"XDKV2",nilai:89},
+{nama:"AgungL",kelas:"XDKV2",nilai:20},
+{nama:"MuhamadRevaldiansyah",kelas:"XDKV2",nilai:80},
+{nama:"MUHAMADALDO",kelas:"XDKV2",nilai:29},
+{nama:"Airaastuti",kelas:"XDKV2",nilai:34},
+{nama:"HadiRamdani",kelas:"XDKV2",nilai:37},
+{nama:"RevanMaulanaFirmansyah",kelas:"XDKV2",nilai:29},
+{nama:"ilyasepriana",kelas:"XDKV2",nilai:40},
+{nama:"Raninuraeni",kelas:"XDKV2",nilai:46},
+{nama:"Galih",kelas:"XDKV2",nilai:80},
+{nama:"IhsanMubarok",kelas:"XDKV2",nilai:51},
+{nama:"Ailasyati",kelas:"XDKV2",nilai:40},
+{nama:"Raga",kelas:"XDKV2",nilai:40},
+{nama:"RaihanKhoirulAzzam",kelas:"XDKV2",nilai:43},
+{nama:"Nenghoerulnisa",kelas:"XDKV2",nilai:69},
+{nama:"CepHeripurnama",kelas:"XDKV2",nilai:34},
+{nama:"DesiLestari",kelas:"XDKV2",nilai:69},
+{nama:"Dikisabitmuslim",kelas:"XDKV2",nilai:77},
+{nama:"zahrafatmawatii",kelas:"XDKV2",nilai:31},
+{nama:"ARIPIN",kelas:"XDKV2",nilai:37},
+{nama:"AnurAlam",kelas:"XDKV2",nilai:74},
+{nama:"ViaSitiSa'adah",kelas:"XDKV2",nilai:31},
+{nama:"AgungL",kelas:"XDKV2",nilai:83},
+{nama:"LailaNazwatulFuadah",kelas:"XDKV2",nilai:40},
+{nama:"SitiRahmiRahmawati",kelas:"XDKV2",nilai:77},
+{nama:"seftiranursyafitri",kelas:"XDKV2",nilai:40},
+{nama:"SintaFitriRamadani",kelas:"XDKV2",nilai:49},
+{nama:"Dedesetiawan",kelas:"XDKV3",nilai:31},
+{nama:"AgisAbdulMuij",kelas:"XDKV3",nilai:80},
+{nama:"Mvigiramdani",kelas:"XDKV3",nilai:71},
+{nama:"ALLIFHAKIMMULYANA",kelas:"XDKV3",nilai:26},
+{nama:"FauzanMuhamadRizki",kelas:"XDKV3",nilai:34},
+{nama:"KHOIRILMUHAMADI",kelas:"XDKV3",nilai:37},
+{nama:"AliNugraha",kelas:"XDKV3",nilai:29},
+{nama:"irwannurhakim",kelas:"XDKV3",nilai:31},
+{nama:"Ikbalabdulaziz",kelas:"XDKV3",nilai:29},
+{nama:"pebriyana",kelas:"XDKV3",nilai:94},
+{nama:"ANDIKAPRATAMAY",kelas:"XDKV3",nilai:31},
+{nama:"PaizalShiddiq",kelas:"XDKV3",nilai:26},
+{nama:"Mazkaardian",kelas:"XDKV3",nilai:37},
+{nama:"Rizkiabdullah",kelas:"XDKV3",nilai:37},
+{nama:"RizwanAhmadFaisal",kelas:"XDKV3",nilai:31},
+{nama:"FaizMukarom",kelas:"XDKV3",nilai:77},
+{nama:"Indrapurnama",kelas:"XDKV3",nilai:40},
+{nama:"NesaAgnesia",kelas:"XDKV3",nilai:89},
+{nama:"Dinahpadiyah",kelas:"XDKV3",nilai:69},
+{nama:"reginajulyananurul",kelas:"XDKV3",nilai:29},
+{nama:"IQBALNURULIKHSAN",kelas:"XDKV3",nilai:9},
+{nama:"ResaAprilia",kelas:"XDKV3",nilai:31},
+{nama:"MeindahNurislamiSalsabila",kelas:"XDKV3",nilai:46},
+{nama:"MetaNurinsani",kelas:"XDKV3",nilai:46},
+{nama:"cantikamaharani",kelas:"XDKV3",nilai:77},
+{nama:"rismalestari",kelas:"XDKV3",nilai:94},
+{nama:"urviaulia",kelas:"XDKV3",nilai:80},
+{nama:"wulanlustiawati",kelas:"XDKV3",nilai:80},
+{nama:"WildaNurulAfifah",kelas:"XDKV3",nilai:77},
+{nama:"Wifqibahrulfahmi",kelas:"XDKV3",nilai:71},
+  ];
+
+  function cekNilai() {
+    const input = document.getElementById('namaInput').value.trim().toLowerCase();
+    const hasil = document.getElementById('hasil');
+    const siswa = dataSiswa.find(s => s.nama.toLowerCase().includes(input));
+
+    if (siswa) {
+      hasil.style.display = 'block';
+      if (siswa.nilai < 60) {
+        hasil.className = 'result warning';
+        hasil.innerHTML = `<strong>${siswa.nama}</strong> (${siswa.kelas})<br>
+        Nilai Anda: <strong>${siswa.nilai}</strong><br>
+        ⚠ Silakan hubungi guru yang bersangkutan untuk perbaikan nilai.<br>
+        Nilai Anda kurang dan akan menjadi pertimbangan untuk naik ke kelas 11.`;
+      } else {
+        hasil.className = 'result success';
+        hasil.innerHTML = `<strong>${siswa.nama}</strong> (${siswa.kelas})<br>
+        Nilai Anda: <strong>${siswa.nilai}</strong><br>
+        🎉 Selamat! Anda telah memenuhi nilai ketuntasan.`;
+      }
+    } else {
+      hasil.style.display = 'block';
+      hasil.className = 'result notfound';
+      hasil.innerHTML = `❌ Nama tidak ditemukan. Pastikan penulisan nama benar.`;
+    }
+  }
+</script>
+
+</body>
+</html>
