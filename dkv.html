@@ -50,6 +50,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       letter-spacing: 0.5px;
+      margin-bottom: 10px; /* Added margin-bottom for spacing */
     }
     button:hover {
       background: linear-gradient(45deg, #17a2b8, #138496);
@@ -96,6 +97,14 @@
         margin-top: 10px;
         font-size: 0.95em;
     }
+    /* Style for the back button */
+    .back-button {
+      background: #6c757d; /* A neutral gray color */
+      margin-top: 15px; /* Added margin-top to separate from other buttons */
+    }
+    .back-button:hover {
+      background: #5a6268;
+    }
   </style>
 </head>
 <body>
@@ -105,6 +114,7 @@
   <input type="text" id="namaInput" placeholder="Masukkan nama pendek Anda di sini...">
   <button onclick="cekNilai()">Cek Nilai DKV</button>
   <div id="hasil" class="result" style="display:none;"></div>
+  <button class="back-button" onclick="goBack()">Kembali ke Menu Utama</button>
 </div>
 
 <script>
