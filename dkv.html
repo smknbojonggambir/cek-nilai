@@ -1,140 +1,94 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cek Nilai DKV</title>
   <style>
-    :root {
-      --primary: #007bff;
-      --success: #28a745;
-      --warning: #ffc107;
-      --danger: #dc3545;
-      --light-bg: #f4f6f8;
-      --white: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: var(--light-bg);
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2f5;
       margin: 0;
       padding: 20px;
     }
-
     .container {
       max-width: 600px;
       margin: auto;
-      background: var(--white);
+      background: #fff;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       padding: 30px;
     }
-
-    h2 {
-      text-align: center;
-      color: var(--primary);
-      margin-bottom: 20px;
-    }
-
-    input[type="text"] {
+    input, button {
       width: 100%;
       padding: 12px;
       font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
       margin-bottom: 12px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      background: var(--primary);
-      color: var(--white);
-      border: none;
       border-radius: 8px;
+    }
+    input {
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #0069d9;
+      color: white;
+      border: none;
       cursor: pointer;
-      transition: background 0.3s;
     }
-
     button:hover {
-      background: #0056b3;
+      background: #004d9d;
     }
-
     .result {
       margin-top: 20px;
-      font-size: 16px;
       padding: 15px;
       border-radius: 8px;
-      display: none;
+      font-size: 17px;
     }
-
-    .success {
-      background: #d4edda;
-      color: #155724;
-    }
-
-    .warning {
-      background: #fff3cd;
-      color: #856404;
-    }
-
-    .notfound {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 20px;
-      }
-    }
+    .success { background: #d4edda; color: #155724; }
+    .warning { background: #fff3cd; color: #856404; }
+    .notfound { background: #f8d7da; color: #721c24; }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h2>Cek Nilai DKV</h2>
+  <h2>Cek Nilai - DKV</h2>
   <input type="text" id="namaInput" placeholder="Masukkan nama Anda...">
   <button onclick="cekNilai()">Cek Nilai</button>
-  <div id="hasil" class="result"></div>
+  <div id="hasil" class="result" style="display:none;"></div>
 </div>
 
 <script>
   const dataSiswa = [
-    { nama: "Muhammad Al Basit", kelas: "X DKV 1", nilai: 31 },
-    { nama: "Eka Ramdani", kelas: "X DKV 1", nilai: 17 },
-    { nama: "Nadia Khoirunnisa", kelas: "X DKV 1", nilai: 49 },
-    { nama: "Nanda Ardani", kelas: "X DKV 1", nilai: 94 },
-    { nama: "Muhamad Azril Alansori", kelas: "X DKV 1", nilai: 17 },
-    { nama: "Ilham Hapid Baihaqi", kelas: "X DKV 1", nilai: 46 },
-    { nama: "Ali Adrian Maulana", kelas: "X DKV 1", nilai: 34 },
-    { nama: "Reza Nugraha", kelas: "X DKV 1", nilai: 46 },
-    { nama: "ARIP SAPUTRA", kelas: "X DKV 1", nilai: 71 },
-    { nama: "Elma Rahmawati", kelas: "X DKV 1", nilai: 31 },
-    { nama: "Fajrul dzulfian", kelas: "X DKV 1", nilai: 91 },
-    { nama: "Dylan Felish Arza Syahputra", kelas: "X DKV 1", nilai: 74 },
-    { nama: "Azka Dwi Syifa Munandar", kelas: "X DKV 1", nilai: 40 },
-    { nama: "salman raka alfahrizi", kelas: "X DKV 1", nilai: 51 },
-    { nama: "Fahrul rizki ramdani", kelas: "X DKV 1", nilai: 74 },
-    { nama: "Akmawati Mutmainah", kelas: "X DKV 1", nilai: 40 },
-    { nama: "Irsan Fariz Maulana", kelas: "X DKV 1", nilai: 26 },
-    { nama: "Irpan Haeruman", kelas: "X DKV 1", nilai: 63 },
-    { nama: "Anisa Napilah", kelas: "X DKV 1", nilai: 77 },
-    { nama: "Agung Gunawan", kelas: "X DKV 1", nilai: 43 },
-    { nama: "Riri Pauziah", kelas: "X DKV 1", nilai: 91 },
-    { nama: "Rahman maulana", kelas: "X DKV 1", nilai: 80 },
-    { nama: "Rahma Nurhikmah", kelas: "X DKV 1", nilai: 91 },
-    { nama: "Randi Maolana", kelas: "X DKV 1", nilai: 57 },
-    { nama: "Yopi Nuraeni", kelas: "X DKV 1", nilai: 20 },
-    { nama: "Shintia Agustin", kelas: "X DKV 1", nilai: 83 },
-    { nama: "Silva amelia putri", kelas: "X DKV 1", nilai: 46 },
-    { nama: "Seni aropah", kelas: "X DKV 1", nilai: 49 },
-    { nama: "Trian Fariz Azzikri", kelas: "X DKV 1", nilai: 69 }
+    { nama: "Muhammad Al Basit", kelas: "X DKV 1", nilai: 63 },
+    { nama: "Muhamad Azril Alansori", kelas: "X DKV 1", nilai: 23 },
+    { nama: "Nanda Ardani", kelas: "X DKV 1", nilai: 97 },
+    { nama: "Nadia Khoirunnisa", kelas: "X DKV 1", nilai: 53 },
+    { nama: "Agung Gunawan", kelas: "X DKV 1", nilai: 90 },
+    { nama: "Eka Ramdani", kelas: "X DKV 1", nilai: 43 },
+    { nama: "Arip Saputra", kelas: "X DKV 1", nilai: 77 },
+    { nama: "Irpan Haeruman", kelas: "X DKV 1", nilai: 80 },
+    { nama: "Ilham Hapid Baihaqi", kelas: "X DKV 1", nilai: 53 },
+    { nama: "Reza Nugraha", kelas: "X DKV 1", nilai: 77 },
+    { nama: "Irsan Fariz Maulana", kelas: "X DKV 1", nilai: 43 },
+    { nama: "Ali Adrian Maulana", kelas: "X DKV 1", nilai: 73 },
+    { nama: "Elma Rahmawati", kelas: "X DKV 1", nilai: 70 },
+    { nama: "Fahrul rizki ramdani", kelas: "X DKV 1", nilai: 73 },
+    { nama: "Azka Dwi Syifa Munandar", kelas: "X DKV 1", nilai: 63 },
+    { nama: "Dylan Felish Arza Syahputra", kelas: "X DKV 1", nilai: 77 },
+    { nama: "Salman raka alfahrizi", kelas: "X DKV 1", nilai: 50 },
+    { nama: "Fajrul dzulfian", kelas: "X DKV 1", nilai: 63 },
+    { nama: "Rahman maulana", kelas: "X DKV 1", nilai: 53 },
+    { nama: "Randi Maolana", kelas: "X DKV 1", nilai: 73 },
+    { nama: "Yopi Nuraeni", kelas: "X DKV 1", nilai: 27 },
+    { nama: "Silva Amelia Putri", kelas: "X DKV 1", nilai: 67 },
+    { nama: "Anisa Napilah", kelas: "X DKV 1", nilai: 87 },
+    { nama: "Akmawati Mutmainah", kelas: "X DKV 1", nilai: 77 },
+    { nama: "Riri Pauziah", kelas: "X DKV 1", nilai: 77 },
+    { nama: "Trian Fariz Azzikri", kelas: "X DKV 1", nilai: 90 },
+    { nama: "Shintia Agustin", kelas: "X DKV 1", nilai: 80 },
+    { nama: "Rahma Nurhikmah", kelas: "X DKV 1", nilai: 83 },
+    { nama: "Seni aropah", kelas: "X DKV 1", nilai: 97 }
   ];
 
   function cekNilai() {
@@ -146,21 +100,19 @@
       hasil.style.display = 'block';
       if (siswa.nilai < 60) {
         hasil.className = 'result warning';
-        hasil.innerHTML = `
-          <strong>${siswa.nama}</strong> (${siswa.kelas})<br>
-          Nilai Anda: <strong>${siswa.nilai}</strong><br>
-          ⚠ Nilai belum tuntas. Silakan menghubungi guru mata pelajaran.`;
+        hasil.innerHTML = `<strong>${siswa.nama}</strong> (${siswa.kelas})<br>
+        Nilai Anda: <strong>${siswa.nilai}</strong><br>
+        ⚠ Silakan perbaiki tugas atau ujian Anda. Nilai belum tuntas.`;
       } else {
         hasil.className = 'result success';
-        hasil.innerHTML = `
-          <strong>${siswa.nama}</strong> (${siswa.kelas})<br>
-          Nilai Anda: <strong>${siswa.nilai}</strong><br>
-          🎉 Selamat, Anda telah lulus mata pelajaran ini!`;
+        hasil.innerHTML = `<strong>${siswa.nama}</strong> (${siswa.kelas})<br>
+        Nilai Anda: <strong>${siswa.nilai}</strong><br>
+        🎉 Selamat! Anda telah lulus dengan nilai memuaskan.`;
       }
     } else {
       hasil.style.display = 'block';
       hasil.className = 'result notfound';
-      hasil.innerHTML = `❌ Nama tidak ditemukan. Pastikan penulisan benar.`;
+      hasil.innerHTML = `❌ Nama tidak ditemukan. Coba cek kembali penulisan nama Anda.`;
     }
   }
 </script>
