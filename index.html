@@ -3,97 +3,185 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portal Cek Nilai</title>
+  <title>Portal Cek Nilai Siswa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #1f3c88;
+      --secondary-color: #f1c40f;
+      --background-gradient-start: #e0eafc;
+      --background-gradient-end: #cfdef3;
+      --card-bg: #ffffff;
+      --text-dark: #2c3e50;
+      --text-light: #5a6a7a;
+      --border-color: #e0e0e0;
+      --shadow-light: rgba(0, 0, 0, 0.05);
+      --shadow-medium: rgba(0, 0, 0, 0.1);
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #f0f2f5, #dce3f0);
+      background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
       margin: 0;
       padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
     }
 
     .container {
-      max-width: 720px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.9);
+      max-width: 760px; /* Slightly wider for better spacing */
+      width: 100%;
+      background: var(--card-bg);
       padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-      backdrop-filter: blur(8px);
+      border-radius: 20px; /* More rounded corners */
+      box-shadow: 0 15px 35px var(--shadow-medium); /* Stronger shadow */
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .header {
+      margin-bottom: 30px;
     }
 
     .logo {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .logo img {
-      height: 60px;
-      margin-right: 10px;
+      height: 70px; /* Slightly larger logo */
+      margin-right: 12px;
+      border-radius: 8px; /* Soften logo edges */
     }
 
     .logo span {
-      font-size: 22px;
+      font-family: 'Poppins', sans-serif; /* Different font for brand name */
+      font-size: 28px; /* Larger brand name */
       font-weight: 700;
-      color: #2c3e50;
+      color: var(--primary-color);
+      letter-spacing: -0.5px;
     }
 
     h1 {
-      text-align: center;
-      color: #1f3c88;
-      font-size: 26px;
-      margin-bottom: 30px;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      font-size: 32px; /* Larger main title */
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+        font-size: 18px;
+        color: var(--text-light);
+        margin-bottom: 35px;
+    }
+
+    .motivation-quote {
+      font-style: italic;
+      color: #6a7c8c;
+      margin: 30px 0 20px;
+      font-size: 1.1em;
+      line-height: 1.5;
+      padding: 0 20px;
+    }
+
+    .motivation-quote span {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #8899a8;
     }
 
     .menu {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min-width */
+      gap: 25px; /* Increased gap */
+      padding-top: 15px;
     }
 
     .card {
-      background: #fff;
-      border: 1px solid #dcdcdc;
-      padding: 25px 20px;
-      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 30px 25px; /* More padding */
+      border-radius: 15px; /* Consistent rounding */
       text-align: center;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 12px var(--shadow-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px; /* Ensure consistent height */
     }
 
     .card:hover {
-      background: #1f3c88;
-      color: #fff;
-      transform: translateY(-4px);
+      background: var(--primary-color);
+      transform: translateY(-7px); /* More pronounced lift */
+      box-shadow: 0 12px 25px var(--shadow-medium);
     }
 
     .card a {
       text-decoration: none;
-      color: inherit;
-      font-size: 18px;
+      color: var(--text-dark); /* Default text color */
+      font-size: 20px; /* Larger link text */
       font-weight: 600;
       display: block;
+      width: 100%; /* Ensure link takes full card width for clicking */
     }
 
     .card:hover a {
-      color: #f1c40f;
+      color: var(--secondary-color); /* Highlight color on hover */
     }
 
     footer {
-      margin-top: 40px;
+      margin-top: 45px;
       text-align: center;
-      font-size: 14px;
-      color: #888;
+      font-size: 15px;
+      color: var(--text-light);
     }
 
-    @media (max-width: 500px) {
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+        margin: 15px;
+      }
+      .logo img {
+        height: 50px;
+      }
       .logo span {
+        font-size: 22px;
+      }
+      h1 {
+        font-size: 26px;
+      }
+      p.subtitle {
+        font-size: 16px;
+      }
+      .card {
+        padding: 25px 20px;
+      }
+      .card a {
         font-size: 18px;
+      }
+      .menu {
+        grid-template-columns: 1fr; /* Stack cards on small screens */
+      }
+    }
+
+    @media (max-width: 400px) {
+      body {
+        padding: 15px;
+      }
+      .motivation-quote {
+        font-size: 1em;
       }
     }
   </style>
@@ -101,11 +189,19 @@
 <body>
 
 <div class="container">
-  <div class="logo">
-    <img src="logo-smknb.png" alt="Logo SMKNB" />
-    <span>SMKN Bojonggambir</span>
+  <div class="header">
+    <div class="logo">
+      <img src="https://via.placeholder.com/70" alt="Logo SMKNB" /> <span>SMKN Bojonggambir</span>
+    </div>
+    <h1>Portal Cek Nilai Siswa</h1>
+    <p class="subtitle">Pilih mata pelajaran untuk melihat rekap nilai Anda.</p>
   </div>
-  <h1>Portal Cek Nilai Siswa</h1>
+
+  <p class="motivation-quote">
+    "Pendidikan adalah paspor menuju masa depan, karena hari esok adalah milik mereka yang mempersiapkannya hari ini."
+    <span>— Malcolm X</span>
+  </p>
+
   <div class="menu">
     <div class="card">
       <a href="dkv.html">Dasar-Dasar Desain Komunikasi Visual</a>
@@ -113,9 +209,10 @@
     <div class="card">
       <a href="informatika.html">Informatika</a>
     </div>
-  </div>
+    </div>
+
   <footer>
-    &copy; 2025 SMKN Bojonggambir – Sistem Informasi Nilai
+    &copy; 2025 SMKN Bojonggambir – Sistem Informasi Nilai. Teruslah belajar, raih cita-citamu!
   </footer>
 </div>
 
