@@ -4,48 +4,72 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portal Cek Nilai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f2f5;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0f2f5, #dce3f0);
       margin: 0;
       padding: 20px;
     }
 
     .container {
-      max-width: 700px;
+      max-width: 720px;
       margin: auto;
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      height: 60px;
+      margin-right: 10px;
+    }
+
+    .logo span {
+      font-size: 22px;
+      font-weight: 700;
+      color: #2c3e50;
     }
 
     h1 {
       text-align: center;
-      color: #007bff;
+      color: #1f3c88;
+      font-size: 26px;
       margin-bottom: 30px;
     }
 
     .menu {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
     }
 
     .card {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 10px;
+      background: #fff;
+      border: 1px solid #dcdcdc;
+      padding: 25px 20px;
+      border-radius: 12px;
       text-align: center;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
     }
 
     .card:hover {
-      background: #007bff;
+      background: #1f3c88;
       color: #fff;
-      transform: scale(1.03);
+      transform: translateY(-4px);
     }
 
     .card a {
@@ -53,19 +77,34 @@
       color: inherit;
       font-size: 18px;
       font-weight: 600;
+      display: block;
+    }
+
+    .card:hover a {
+      color: #f1c40f;
     }
 
     footer {
       margin-top: 40px;
       text-align: center;
       font-size: 14px;
-      color: #666;
+      color: #888;
+    }
+
+    @media (max-width: 500px) {
+      .logo span {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 <body>
 
 <div class="container">
+  <div class="logo">
+    <img src="logo-smknb.png" alt="Logo SMKNB" />
+    <span>SMKN Bojonggambir</span>
+  </div>
   <h1>Portal Cek Nilai Siswa</h1>
   <div class="menu">
     <div class="card">
