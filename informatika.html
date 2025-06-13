@@ -50,6 +50,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       letter-spacing: 0.5px;
+      margin-bottom: 10px; /* Added margin-bottom for spacing */
     }
     button:hover {
       background: linear-gradient(45deg, #0056b3, #003d80);
@@ -96,6 +97,14 @@
         margin-top: 10px;
         font-size: 0.95em;
     }
+    /* Style for the back button */
+    .back-button {
+      background: #6c757d; /* A neutral gray color */
+      margin-top: 15px; /* Added margin-top to separate from other buttons */
+    }
+    .back-button:hover {
+      background: #5a6268;
+    }
   </style>
 </head>
 <body>
@@ -105,6 +114,7 @@
   <input type="text" id="namaInput" placeholder="Masukkan nama pendekmu di sini...">
   <button onclick="cekNilai()">Cek Nilai</button>
   <div id="hasil" class="result" style="display:none;"></div>
+  <button class="back-button" onclick="goBack()">Kembali ke Menu Utama</button>
 </div>
 
 <script>
@@ -257,7 +267,7 @@
           Nama: <strong>${siswa.nama}</strong><br>
           Kelas: <strong>${siswa.kelas}</strong><br>
           Nilai: <strong>${siswa.nilai}</strong><br>
-          <p>Sayangnya, nilai Anda belum mencapai batas kelulusan. Ini berarti Anda perlu mengulang materi ini. Jangan jadikan ini penghalang, tapi jadikan motivasi untuk belajar lebih giat lagi!</p>
+          <p>Mohon maaf, nilai Anda belum mencapai batas kelulusan. Ini berarti Anda perlu mengulang materi ini. Jangan jadikan ini penghalang, tapi jadikan motivasi untuk belajar lebih giat lagi!</p>
           <p class="contact-teacher"><strong>PENTING: Segera hubungi guru mata pelajaran Anda</strong> untuk mendiskusikan langkah selanjutnya dan mencari solusi terbaik.</p>
           <p class="important-note">Mohon diperhatikan, nilai ini akan menjadi pertimbangan utama untuk kenaikan kelas Anda ke tingkat berikutnya.</p>
           <p>Kami percaya Anda bisa melewati ini dan mencapai keberhasilan di masa depan! Semangat!</p>
