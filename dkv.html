@@ -7,54 +7,103 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #eef2f5;
+      background: #f4f6f8;
       margin: 0;
       padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
     .container {
       max-width: 600px;
+      width: 100%;
       margin: auto;
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       padding: 30px;
+      text-align: center;
     }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      margin-bottom: 12px;
-      border-radius: 8px;
+    h2 {
+      color: #333;
+      margin-bottom: 25px;
+      font-size: 1.8em;
     }
     input {
+      width: calc(100% - 24px); /* Account for padding */
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 15px;
       border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box; /* Include padding in width */
     }
     button {
-      background: #0069d9;
+      width: 100%;
+      padding: 14px;
+      font-size: 17px;
+      background: linear-gradient(45deg, #20c997, #17a2b8); /* Warna hijau-biru untuk DKV */
       color: white;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
     }
     button:hover {
-      background: #004d9d;
+      background: linear-gradient(45deg, #17a2b8, #138496);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .result {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 8px;
-      font-size: 17px;
+      margin-top: 25px;
+      font-size: 1.1em;
+      padding: 20px;
+      border-radius: 10px;
+      line-height: 1.6;
+      text-align: left;
     }
-    .success { background: #d4edda; color: #155724; }
-    .warning { background: #fff3cd; color: #856404; }
-    .notfound { background: #f8d7da; color: #721c24; }
+    .success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+    }
+    .danger {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .message-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+    .contact-teacher {
+        font-weight: bold;
+        color: #d8000c; /* A strong red for emphasis */
+        margin-top: 15px;
+        font-size: 1.1em;
+    }
+    .important-note {
+        font-style: italic;
+        color: #721c24;
+        margin-top: 10px;
+        font-size: 0.95em;
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h2>Cek Nilai - DKV</h2>
-  <input type="text" id="namaInput" placeholder="Masukkan nama Anda...">
-  <button onclick="cekNilai()">Cek Nilai</button>
+  <h2>🎨 Cek Nilai Mata Pelajaran DKV Anda! 🎨</h2>
+  <input type="text" id="namaInput" placeholder="Masukkan nama pendek Anda di sini...">
+  <button onclick="cekNilai()">Cek Nilai DKV</button>
   <div id="hasil" class="result" style="display:none;"></div>
 </div>
 
@@ -98,21 +147,44 @@
 
     if (siswa) {
       hasil.style.display = 'block';
-      if (siswa.nilai < 60) {
-        hasil.className = 'result warning';
-        hasil.innerHTML = `<strong>${siswa.nama}</strong> (${siswa.kelas})<br>
-        Nilai Anda: <strong>${siswa.nilai}</strong><br>
-        ⚠ Silakan perbaiki tugas atau ujian Anda. Nilai belum tuntas.`;
-      } else {
+      if (siswa.nilai >= 80) {
         hasil.className = 'result success';
-        hasil.innerHTML = `<strong>${siswa.nama}</strong> (${siswa.kelas})<br>
-        Nilai Anda: <strong>${siswa.nilai}</strong><br>
-        🎉 Selamat! Anda telah lulus dengan nilai memuaskan.`;
+        hasil.innerHTML = `
+          <div class="message-title">🎉 Selamat, ${siswa.nama}! Prestasi DKV Anda Luar Biasa! 🎉</div>
+          Nama: <strong>${siswa.nama}</strong><br>
+          Kelas: <strong>${siswa.kelas}</strong><br>
+          Nilai DKV Anda: <strong>${siswa.nilai}</strong><br>
+          Hebat sekali! Nilai Anda sudah tuntas dan sangat memuaskan. Ini menunjukkan dedikasi dan bakat Anda dalam DKV. Teruslah berkarya dan kembangkan potensi terbaikmu!
+        `;
+      } else if (siswa.nilai >= 60 && siswa.nilai <= 79) {
+        hasil.className = 'result warning';
+        hasil.innerHTML = `
+          <div class="message-title">💡 Semangat, ${siswa.nama}! Ada Kesempatan Tingkatkan Nilai DKV-mu! 💡</div>
+          Nama: <strong>${siswa.nama}</strong><br>
+          Kelas: <strong>${siswa.kelas}</strong><br>
+          Nilai DKV Anda: <strong>${siswa.nilai}</strong><br>
+          Nilai Anda cukup baik, namun masih ada potensi untuk lebih bersinar! Jangan lewatkan kesempatan untuk perbaikan. Hubungi segera **guru mata pelajaran DKV Anda** untuk mengetahui jadwal dan materi perbaikan. Kami yakin Anda bisa mencapai hasil yang lebih optimal!
+        `;
+      } else { // Nilai < 60
+        hasil.className = 'result danger';
+        hasil.innerHTML = `
+          <div class="message-title">❗ Tetap Semangat, ${siswa.nama}! Ini Bukan Akhir dari Kreativitasmu! ❗</div>
+          Nama: <strong>${siswa.nama}</strong><br>
+          Kelas: <strong>${siswa.kelas}</strong><br>
+          Nilai DKV Anda: <strong>${siswa.nilai}</strong><br>
+          <p>Mohon maaf, nilai mata pelajaran DKV Anda belum mencapai ketuntasan.</p>
+          <p class="contact-teacher"><strong>Tindakan Penting: Anda WAJIB segera menghubungi guru mata pelajaran DKV Anda</strong> untuk mendiskusikan tugas/ujian perbaikan dan langkah-langkah selanjutnya.</p>
+          <p class="important-note">Perlu diingat, nilai ini akan **menjadi pertimbangan serius untuk kenaikan kelas** Anda ke tingkat berikutnya. Jangan menyerah, manfaatkan kesempatan ini untuk belajar dan membuktikan kemampuan Anda!</p>
+          <p>Kami percaya Anda memiliki potensi besar dalam DKV. Semangat!</p>
+        `;
       }
     } else {
       hasil.style.display = 'block';
-      hasil.className = 'result notfound';
-      hasil.innerHTML = `❌ Nama tidak ditemukan. Coba cek kembali penulisan nama Anda.`;
+      hasil.className = 'result danger';
+      hasil.innerHTML = `
+        <div class="message-title">🔍 Nama Tidak Ditemukan 🚫</div>
+        Mohon maaf, nama yang Anda masukkan tidak ada dalam daftar nilai DKV. Pastikan Anda menuliskan nama pendek dengan benar. Coba lagi ya!
+      `;
     }
   }
 </script>
