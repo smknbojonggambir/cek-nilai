@@ -74,7 +74,7 @@
       color: #856404;
       border: 1px solid #ffeeba;
     }
-    .danger { /* Changed from notfound for consistency with academic terms */
+    .danger {
       background: #f8d7da;
       color: #721c24;
       border: 1px solid #f5c6cb;
@@ -83,6 +83,18 @@
         font-weight: bold;
         margin-bottom: 10px;
         font-size: 1.2em;
+    }
+    .contact-teacher {
+        font-weight: bold;
+        color: #d8000c; /* A strong red for emphasis */
+        margin-top: 15px;
+        font-size: 1.1em;
+    }
+    .important-note {
+        font-style: italic;
+        color: #721c24;
+        margin-top: 10px;
+        font-size: 0.95em;
     }
   </style>
 </head>
@@ -210,6 +222,7 @@
 {nama:"wulanlustiawati",kelas:"XDKV3",nilai:80},
 {nama:"WildaNurulAfifah",kelas:"XDKV3",nilai:77},
 {nama:"Wifqibahrulfahmi",kelas:"XDKV3",nilai:71},
+{nama:"MuhamadAzrilAlansori",kelas:"XDKV1",nilai:23},
   ];
 
   function cekNilai() {
@@ -223,25 +236,31 @@
         hasil.className = 'result success';
         hasil.innerHTML = `
           <div class="message-title">🎉 Selamat, ${siswa.nama}! Kerja Kerasmu Terbayar! 🎉</div>
+          Nama: <strong>${siswa.nama}</strong><br>
           Kelas: <strong>${siswa.kelas}</strong><br>
-          Nilai Anda: <strong>${siswa.nilai}</strong><br>
+          Nilai: <strong>${siswa.nilai}</strong><br>
           Luar biasa! Anda telah mencapai nilai yang sangat baik dan memenuhi ketuntasan. Pertahankan semangat belajar ini, masa depan cerah menantimu!
         `;
       } else if (siswa.nilai >= 60 && siswa.nilai <= 79) {
         hasil.className = 'result warning';
         hasil.innerHTML = `
           <div class="message-title">💡 Semangat, ${siswa.nama}! Ada Kesempatan untuk Lebih Baik! 💡</div>
+          Nama: <strong>${siswa.nama}</strong><br>
           Kelas: <strong>${siswa.kelas}</strong><br>
-          Nilai Anda: <strong>${siswa.nilai}</strong><br>
+          Nilai: <strong>${siswa.nilai}</strong><br>
           Nilai Anda cukup baik, namun masih ada ruang untuk perbaikan. Jangan khawatir! Kamu berhak mengikuti remedial untuk meningkatkan nilai dan mengukir prestasi yang lebih gemilang. Segera hubungi guru mata pelajaranmu untuk jadwal perbaikan. Setiap usaha pasti membuahkan hasil!
         `;
       } else { // Nilai < 60
         hasil.className = 'result danger';
         hasil.innerHTML = `
           <div class="message-title">❗ Tetap Semangat, ${siswa.nama}! Ini Bukan Akhir! ❗</div>
+          Nama: <strong>${siswa.nama}</strong><br>
           Kelas: <strong>${siswa.kelas}</strong><br>
-          Nilai Anda: <strong>${siswa.nilai}</strong><br>
-          Sayangnya, nilai Anda belum mencapai batas kelulusan. Ini berarti Anda perlu mengulang materi ini. Jangan jadikan ini penghalang, tapi jadikan motivasi untuk belajar lebih giat lagi! Segera **hubungi guru mata pelajaran Anda** untuk mendiskusikan langkah selanjutnya. Kami percaya Anda bisa melewati ini dan mencapai keberhasilan di masa depan!
+          Nilai: <strong>${siswa.nilai}</strong><br>
+          <p>Sayangnya, nilai Anda belum mencapai batas kelulusan. Ini berarti Anda perlu mengulang materi ini. Jangan jadikan ini penghalang, tapi jadikan motivasi untuk belajar lebih giat lagi!</p>
+          <p class="contact-teacher"><strong>PENTING: Segera hubungi guru mata pelajaran Anda</strong> untuk mendiskusikan langkah selanjutnya dan mencari solusi terbaik.</p>
+          <p class="important-note">Mohon diperhatikan, nilai ini akan menjadi pertimbangan utama untuk kenaikan kelas Anda ke tingkat berikutnya.</p>
+          <p>Kami percaya Anda bisa melewati ini dan mencapai keberhasilan di masa depan! Semangat!</p>
         `;
       }
     } else {
